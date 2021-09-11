@@ -9,7 +9,7 @@ import {Producto} from './producto.model';
         entity: 'Producto',
         entityKey: 'id',
         foreignKey: 'id_producto',
-      },
+      }
     },
   },
 })
