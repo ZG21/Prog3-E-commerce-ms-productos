@@ -1,11 +1,11 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, BelongsToAccessor, HasManyThroughRepositoryFactory, HasManyRepositoryFactory} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, DefaultCrudRepository, HasManyRepositoryFactory, HasManyThroughRepositoryFactory, repository} from '@loopback/repository';
 import {MysqlDataSource} from '../datasources';
-import {Producto, ProductoRelations, Marca, Categoria, CategoriaProducto, Imagen} from '../models';
-import {MarcaRepository} from './marca.repository';
+import {Categoria, CategoriaProducto, Imagen, Marca, Producto, ProductoRelations} from '../models';
 import {CategoriaProductoRepository} from './categoria-producto.repository';
 import {CategoriaRepository} from './categoria.repository';
 import {ImagenRepository} from './imagen.repository';
+import {MarcaRepository} from './marca.repository';
 
 export class ProductoRepository extends DefaultCrudRepository<
   Producto,
@@ -30,8 +30,6 @@ export class ProductoRepository extends DefaultCrudRepository<
     super(Producto, dataSource);
     this.imagenes = this.createHasManyRepositoryFactoryFor('imagenes', imagenRepositoryGetter,);
     this.registerInclusionResolver('imagenes', this.imagenes.inclusionResolver);
-    this.pertenece_a_producto = this.createBelongsToAccessorFor('pertenece_a_producto', imagenRepositoryGetter,);
-    this.registerInclusionResolver('pertenece_a_producto', this.pertenece_a_producto.inclusionResolver);
     this.categorias = this.createHasManyThroughRepositoryFactoryFor('categorias', categoriaRepositoryGetter, categoriaProductoRepositoryGetter,);
     this.registerInclusionResolver('categorias', this.categorias.inclusionResolver);
     this.tiene_marca = this.createBelongsToAccessorFor('tiene_marca', marcaRepositoryGetter,);
